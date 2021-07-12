@@ -2,7 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ContentBlock } from './ContentBlock';
 
 const setGenericBlock = () => {
-    const cb = <ContentBlock name='test' vrbs='Test Content Block' text='This is a test.' />;
+    // const cb = <ContentBlock name='test' vrbs='Test Content Block' text='This is a test.' />;
+    const testBlock = {
+        name: 'testBlock',
+        vrbs: 'Test Block',
+        text: 'This is a test. Dis block for da analysts!',
+    }
+    const cb = ContentBlock(testBlock['name'], testBlock['vrbs'], testBlock['text']);
     return cb;
 }
 
@@ -43,7 +49,7 @@ export const Carousel = (props) => {
     const handleIconClick = (e) => {
         e.preventDefault();
         const elem = e.currentTarget.className;
-        alert('look', 'icon clicked');
+        console.log('icon clicked: ', elem);
     }
 
     const handleIconList = (contentGroup) => {
@@ -62,21 +68,21 @@ export const Carousel = (props) => {
         }
     }
 
-    const handleHighlightIdx = () => {
-        console.log('handling highlight index...')
-        try {
-            let next = 0;   console.log('default next: ', next);
-            if (highlight >= 0) {
-                console.log('something to highlight: ', true);
-                let current = highlight;    console.log('current hlt: ', current);
-                next = (current + 1 < Object.keys(contentGroup).length) ? current + 1 : 0;     
-            } else {
-                console.log('something to highlight: ', false);
-            }
-            console.log('next hlt: ', next);
-            return next;
-        } catch (error) {
-            console.log('Error: ', error);
+    const handleUpdateIconList = (contentBlock, listIndex) => {
+        const cb =  {
+            name: contentBlock['name'],
+            vrbs: contentBlock['vrbs'],
+            text:contentBlock['text'],
+            imgList: contentBlock['imgList'],
+            url: contentBlock['url'],            
+        }
+        
+        const cBlock = ContentBlock(cb['name'], cb['vrbs'], cb['text'], cb['imgList'], cb['url']);
+        const iconList = document.getElementsByClassName('icon-strip-list');
+        if (iconList) {
+            iconList[listIndex] = cBlock.icon;
+        } else {
+            console.log('icon list not found :(');
         }
     }
     
@@ -93,6 +99,14 @@ export const Carousel = (props) => {
             }
         } catch (error) {
             console.log('Error: ', error);
+        }
+    }
+
+    const handleButtonClick = (e) => {
+        if (e) {
+            e.preventDefault();
+            const n = e.currentTarget.className
+            console.log('btn clicked: ', n);
         }
     }
 
@@ -115,6 +129,21 @@ export const Carousel = (props) => {
             console.log('Error: ', error);
         }
     }, []);
+
+    useEffect(() => {
+        console.log('in btn effect...')
+        try {
+            const updateBtn = document.getElementsByClassName('carousel-btn update');
+            if (updateBtn[0]) {
+                updateBtn[0].onclick = handleButtonClick();
+                console.log('on c: ', updateBtn[0].onclick);
+            } else {
+                console.log(updateBtn[0]);
+            }
+        } catch (error) {
+            console.log('error: ', error);
+        }
+    }, [])
 
     console.log('...end carousel build')
 
@@ -150,6 +179,16 @@ export const Carousel = (props) => {
         width: '300px',
         margin: '0 auto',
     }
+
+    const buttonStyle = {
+        border: '.5px solid grey',
+        backgroundColor: 'yellowgreen',
+        position: 'relative',
+        display: 'block',
+        height: '20px',
+        width: 'auto',
+        margin: '20px auto 4px',
+    }
     
 
     return(
@@ -160,6 +199,16 @@ export const Carousel = (props) => {
             <div style={highlightStyle} className="highlight-area">
                 {handleHighlightUpdate(highlight)}
                 <p>{highlight}</p>
+            </div>
+            <div className="carousel-editor">
+                <input 
+                    style={buttonStyle} 
+                    type="button"
+                    value="update carousel content"
+                    onClick={handleButtonClick} 
+                    className="carousel-btn update" 
+                >
+                </input>
             </div>
         </div>
     );
