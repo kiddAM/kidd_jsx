@@ -130,20 +130,20 @@ export const Carousel = (props) => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log('in btn effect...')
-        try {
-            const updateBtn = document.getElementsByClassName('carousel-btn update');
-            if (updateBtn[0]) {
-                updateBtn[0].onclick = handleButtonClick();
-                console.log('on c: ', updateBtn[0].onclick);
-            } else {
-                console.log(updateBtn[0]);
-            }
-        } catch (error) {
-            console.log('error: ', error);
-        }
-    }, [])
+    // useEffect(() => {
+    //     console.log('in btn effect...')
+    //     try {
+    //         const updateBtn = document.getElementsByClassName('carousel-btn update');
+    //         if (updateBtn[0]) {
+    //             updateBtn[0].onclick = handleButtonClick();
+    //             console.log('on c: ', updateBtn[0].onclick);
+    //         } else {
+    //             console.log(updateBtn[0]);
+    //         }
+    //     } catch (error) {
+    //         console.log('error: ', error);
+    //     }
+    // }, [])
 
     console.log('...end carousel build')
 
