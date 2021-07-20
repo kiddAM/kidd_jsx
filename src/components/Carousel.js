@@ -22,17 +22,12 @@ export const Carousel = (props) => {
 
     const [iconClicked, setIconClicked] = useState(false);
     const [highlighted, setHighlighted] = useState('');
-    const [selected, setSelected] = useState('');   console.log('selected (caro): ', selected);
+    const [selected, setSelected] = useState('');
 
     const handleHighlight = useCallback((data) => {
         try {
             if (data && iconClicked) {
                 setHighlighted(data['name']);
-                if (data['name'] !== selected) {
-                    console.log('clicked n highlighted diff');
-                } else {
-                    console.log('same same');
-                }
             }
         } catch (error) {
             GeneralError(error);
@@ -43,7 +38,7 @@ export const Carousel = (props) => {
         try {
             if (data['clicked']) {
                 setIconClicked(true);
-                console.log('click on: ', data['name']);
+                // console.log('click on: ', data['name']);
                 setSelected(data['name']);
             }
         } catch (error) {
@@ -53,7 +48,7 @@ export const Carousel = (props) => {
     
     useEffect(() => {
         try {
-            console.log('clicked: ', iconClicked);
+            // console.log('clicked: ', iconClicked);
             if (iconClicked) {
                 setIconClicked(false);
             }
@@ -64,8 +59,8 @@ export const Carousel = (props) => {
 
     useEffect(() => {
         try {
-            if (selected && selected === highlighted) {
-                setSelected(false);
+            if (selected) {
+                setSelected('');
             }
         } catch (error) {
             GeneralError(error);
@@ -75,14 +70,12 @@ export const Carousel = (props) => {
     return(
         <div style={carouselStyle} className="carousel" id={carouselName}>
             <IconList 
-                ref={iconRef} 
                 carouselCallback={handleClickedIcon} 
                 contentBlockGroup={contentGroup} 
             />
             <Highlighter 
-                ref={highlightRef} 
                 carouselCallback={handleHighlight} 
-                selection={selected ? selected : null} 
+                selection={selected ? selected : ''} 
                 contentBlockGroup={contentGroup} 
             />
         </div>

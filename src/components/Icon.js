@@ -1,16 +1,10 @@
 import React, { useEffect, useImperativeHandle, useState, useRef, forwardRef, useCallback  } from 'react';
+import { GeneralError } from './ErrorHandler';
 
-export const Icon = forwardRef((props, ref) => {
+export const Icon = (props) => {
     const iconRef = useRef();
     const [clicked, setClicked] = useState(false);
     const [hover, setHover] = useState(false);
-
-    // useImperativeHandle(ref, () => {
-    //     focus: () => {
-    //         ref.current.focus();
-    //         console.log('focus on me :', ref.current);
-    //     }
-    // });
 
     const iconStyle = {
         backgroundImage: props.imageList ? 'url('+ props.imageList[0] +')' : 'lightblue',
@@ -63,16 +57,16 @@ export const Icon = forwardRef((props, ref) => {
                 }
             }
         } catch (error) {
-            console.log('Error: ', error);
+            GeneralError(error);
         }
     }, [iconRef])
 
     useEffect(() => {
         try {
-            console.log('handler effect...');
+            // console.log('handler effect...');
             sendData();
         } catch (error) {
-            console.log('Error: ', error);
+            GeneralError(error);
         }
     }, [clicked]);
 
@@ -86,4 +80,4 @@ export const Icon = forwardRef((props, ref) => {
                 <h4>{props.verbosename}</h4>
             </div>
     )
-})
+}

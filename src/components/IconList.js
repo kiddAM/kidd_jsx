@@ -1,7 +1,8 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Icon } from './Icon';
+import { GeneralError } from './ErrorHandler';
 
-export const IconList = forwardRef((props, ref) => {
+export const IconList = (props) => {
     const iconStripStyle = {
         border: '1px solid blue',
         position: 'relative',
@@ -22,8 +23,6 @@ export const IconList = forwardRef((props, ref) => {
     }
     
     const contentGroup = (props.contentBlockGroup ? props.contentBlockGroup : []);
-    console.log('content group: ', contentGroup);
-    console.log('keys: ', Object.keys(contentGroup));
     const [list, setList] = useState([]);
 
     const handleClickedIcon = useCallback((data) => {
@@ -42,7 +41,6 @@ export const IconList = forwardRef((props, ref) => {
                     const listElement = (
                         <li style={iconStyle} key={k} className="icon-list-item">
                             <Icon
-                            ref={ref}
                             listCallback={handleClickedIcon}
                             shortname={contentGroup[k]['shortname']} 
                             verbosename={contentGroup[k]['verbosename']} 
@@ -54,7 +52,7 @@ export const IconList = forwardRef((props, ref) => {
                 }
                 return newList;
             } catch (error) {
-                console.log('Error: ', error);
+                GeneralError(error);
             }
         }
         try {
@@ -62,7 +60,7 @@ export const IconList = forwardRef((props, ref) => {
                 setList(handleIconList(contentGroup));
             }
         } catch (error) {
-            console.log('Error: ', error);
+            GeneralError(error);
         }
     }, []);
 
@@ -71,5 +69,5 @@ export const IconList = forwardRef((props, ref) => {
             <ul style={iconStripListStyle} className="icon-strip-list">{list}</ul>
         </div>
     )
-})
+}
 

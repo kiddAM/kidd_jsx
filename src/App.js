@@ -3,6 +3,7 @@ import React from 'react';
 import { Blurb } from './components/Blurb';
 import { Carousel } from './components/Carousel';
 import { ContentBlock } from './components/ContentBlock';
+import { GeneralError } from './components/ErrorHandler';
 
 import pinkIcon from './assets/kidd-clock-xxsm-pnk.png';
 import pinkDiv from './assets/kidd-clock-sm-pnk.png';
@@ -75,6 +76,6 @@ export const App = () => {
             </div>
         );
     } catch (error) {
-        console.log('Error: ', error);
+        GeneralError(error);
     }
 }
