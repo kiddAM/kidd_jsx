@@ -79,7 +79,7 @@ export const Highlighter = (props) => {
                         count++;
                     }
                     setActiveIndex(count);
-                }, 6000);
+                }, 5500);
                 
                 return () => {
                     clearInterval(timer);
