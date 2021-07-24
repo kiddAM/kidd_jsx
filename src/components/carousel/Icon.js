@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useState, useRef, forwardRef, useCallback  } from 'react';
-import { GeneralError } from './ErrorHandler';
+import { GeneralError } from '../ErrorHandler';
 
 export const Icon = (props) => {
     const iconRef = useRef();

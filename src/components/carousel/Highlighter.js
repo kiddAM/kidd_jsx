@@ -1,15 +1,15 @@
 import React, { forwardRef, useState, useEffect, useCallback } from 'react';
 import { Highlight } from './Highlight';
-import { GeneralError } from './ErrorHandler';
+import { GeneralError } from '../ErrorHandler';
 
 export const Highlighter = (props) => {
     const highlightStyle = {
-        border: '1px solid gold',
+        border: '0.025 solid peru',
         position: 'relative',
         display: 'block',
         height: '300px',
         width: '300px',
-        margin: '0 auto',
+        margin: '0.025em auto',
     }
 
     const contentGroup = props.contentBlockGroup;

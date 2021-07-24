@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Icon } from './Icon';
 import { Highlight } from './Highlight';
-import divImg from '../assets/kidd-clock-sm.png';
-import iconImg from '../assets/kidd-clock-xxsm.png';
+import divImg from '../../assets/kidd-clock-sm.png';
+import iconImg from '../../assets/kidd-clock-xxsm.png';
 
 // object: Content Block.
 // descript: Data block for creating carousel items

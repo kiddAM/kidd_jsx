@@ -4,8 +4,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   // the output bundle won't be optimized for production but suitable for development
   mode: 'development',
+  // development server options
+  devServer: {
+    contentBase: path.resolve(__dirname, 'src'),
+    hot: true,
+    port: 8080,
+    historyApiFallback: true,
+  },
   // the app entry point is /src/index.js
-  entry: path.resolve(__dirname, 'src', 'index.js'),
+  entry: {
+    js: [
+      path.resolve(__dirname, 'src', 'index.js'),
+    ]
+  },
   output: {
   	// the output of the webpack build will be in /dist directory
     path: path.resolve(__dirname, 'dist'),

@@ -1,15 +1,16 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Icon } from './Icon';
-import { GeneralError } from './ErrorHandler';
+import { GeneralError } from '../ErrorHandler';
 
 export const IconList = (props) => {
     const iconStripStyle = {
-        border: '1px solid blue',
+        borderBottom: '.05em solid peru',
         position: 'relative',
         display: 'block',
         height: '100px',
         width: '400px',
         padding: 0,
+        margin: '0 auto',
     }
     
     const iconStripListStyle = {

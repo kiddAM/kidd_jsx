@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
-import { GeneralError } from './ErrorHandler';
+import { GeneralError } from '../ErrorHandler';
 
 export const Highlight = (props) => {
     const highlightStyle = {
@@ -8,6 +8,7 @@ export const Highlight = (props) => {
         height: '300px',
         width: '300px',
         color: 'rgb(17, 12, 22)',
+        border: '0.0125em solid peru',
     }
 
     const sendData = () => {

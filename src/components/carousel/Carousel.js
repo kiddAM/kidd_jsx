@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { IconList } from './IconList';
 import { Highlighter } from './Highlighter';
-import { GeneralError } from './ErrorHandler';
+import { GeneralError } from '../ErrorHandler';
 
 export const Carousel = (props) => {
     const carouselStyle = {
-        border: '1.5px solid silver',
+        border: '0.1em solid peru',
+        borderRadius: '.25em',
         position: 'relative',
         display: 'block',
         height: '403px',

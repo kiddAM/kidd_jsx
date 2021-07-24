@@ -4,13 +4,12 @@ const blurbStyle = {
     color: 'yellowgreen',
 }
 
-export const Blurb = () => {
+export const Blurb = (props) => {
     // console.log('getting intro...')
+    const name = props.name ? `short-blurb ${props.name}` : "short-blurb";
     return(
-        <div style={blurbStyle} className="test-introduction">
-            <p>howdy, i'm kidd AM.</p>
-            <p>i'm a writer, rapper, n producer.</p>
-            <p>fwm.</p>
+        <div style={blurbStyle} className={name}>
+            {props.text}
         </div>
    );
 }
