@@ -1,10 +1,18 @@
 # kidd_jsx
+# a React.js website
 
-requires npm
+features: 
+- my own version of a Carousel component
+- cute colors
 
-from root directory:
-run `npm install`
-run `npm run build`
-run `npm run start`
+**to deploy from src:**
+  requires npm
 
-find other necessary commands in `package.json`
+  from root directory:
+    - run `npm install`
+    - run `npm run build`
+    - run `npm run start`
+    
+  find other necessary commands in `package.json`
+
+**will be available online soon!**
