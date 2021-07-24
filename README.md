@@ -1,5 +1,4 @@
 # kidd_jsx
-# a React.js website
 
 features: 
 - my own version of a Carousel component
