@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { GeneralError } from '../ErrorHandler';
 
 export const Highlight = (props) => {
@@ -9,6 +10,7 @@ export const Highlight = (props) => {
         width: '300px',
         color: 'rgb(17, 12, 22)',
         border: '0.0125em solid peru',
+        borderRadius: '0.175em',
     }
 
     const sendData = () => {
@@ -23,14 +25,14 @@ export const Highlight = (props) => {
             GeneralError(error);
         }
         // console.log('data sending..');
-    })
+    });
 
     return(
-        <a href={props.link} className="highlight-url">
+        <Link to={{ pathname: props.link}} target="_blank">
             <div style={highlightStyle} className="content-block highlight" id={props.shortname}>
                 <h3>{props.verbosename}</h3>
                 <p>{props.text}</p>
             </div>
-        </a>
+        </Link>
     )
 }

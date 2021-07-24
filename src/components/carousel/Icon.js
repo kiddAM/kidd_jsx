@@ -13,6 +13,7 @@ export const Icon = (props) => {
         height: '100px',
         width: '100px',
         color: 'rgb(17, 12, 22)',
+        borderRadius: '.175em',
     }
 
     const sendData = () => {

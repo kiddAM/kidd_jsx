@@ -5,8 +5,8 @@ import { GeneralError } from '../ErrorHandler';
 
 export const Carousel = (props) => {
     const carouselStyle = {
-        border: '0.1em solid peru',
-        borderRadius: '.25em',
+        border: '0.075em solid peru',
+        borderRadius: '.175em',
         position: 'relative',
         display: 'block',
         height: '403px',

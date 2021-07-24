@@ -16,7 +16,7 @@ export const ContentBlock = (name, vrbs, text, imgList, url) => {
     const verbose = vrbs ? vrbs : 'test content block'; // verbose name
     const imageList = imgList ? imgList : [iconImg, divImg]; // background image src location
     const blockText = text ? text : 'this is sample text in a sample content block.'; // text data
-    const link = url ? url : 'www.chloe-am.com'; // redirect url
+    const link = url ? url : 'http://www.chloe-am.com'; // redirect url
 
     const stateManager = {
         'shortname': short,

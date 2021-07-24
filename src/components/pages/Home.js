@@ -27,7 +27,7 @@ const contentGroup = {
         vrbs: 'Pink Block',
         text: 'Pink block for da cuties!',
         imgList: [pinkIcon, pinkDiv],
-        url: 'www.google.com',
+        url: 'http://www.google.com',
     },
     1: {
         name: 'orangeBlock',
