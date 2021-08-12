@@ -12,6 +12,7 @@ import blueIcon from '../../assets/kidd-clock-xxsm-blu.png';
 import blueDiv from '../../assets/kidd-clock-sm-blu.png';
 import limeIcon from '../../assets/kidd-clock-xxsm-lime.png';
 import limeDiv from '../../assets/kidd-clock-sm-lime.png';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const blurbText = (
     <div>
@@ -55,7 +56,7 @@ const handleContentBlocks = (contentDict) => {
         const contentBlockGroup = {};
         for (let k = 0; k < Object.keys(contentGroup).length; k++) {
             const content = contentGroup[k];
-            console.log('content: ', content);
+            // console.log('content: ', content);
             const block = ContentBlock(
                 content['name'], 
                 content['vrbs'],
@@ -68,18 +69,20 @@ const handleContentBlocks = (contentDict) => {
         }
         return(contentBlockGroup);
     } catch (error) {
-        GeneralError(error)
+        GeneralError(error);
     }
 }
 
 export const Home = () => {
     const group = handleContentBlocks(contentGroup);
     return(
-        <div className="page home">
-            <Blurb name="intro" text={blurbText} />
-            <div className="content">
-                <Carousel name={carouselName} contentBlockGroup={group ? group : null} />
+        <ErrorBoundary>
+            <div className="page home">
+                <Blurb name="intro" text={blurbText} />
+                <div className="content">
+                    <Carousel name={carouselName} contentBlockGroup={group ? group : null} />
+                </div>
             </div>
-        </div>
+        </ErrorBoundary>
     )
 }

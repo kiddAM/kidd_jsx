@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { IconList } from './IconList';
 import { Highlighter } from './Highlighter';
 import { GeneralError } from '../ErrorHandler';
+import { useIsMounted } from '../useIsMounted';
 
 export const Carousel = (props) => {
     const carouselStyle = {
@@ -15,8 +17,7 @@ export const Carousel = (props) => {
         color: 'yellowgreen',
     }
     
-    let iconRef = useRef();
-    let highlightRef = useRef();
+    const isMounted = useIsMounted();
     let genName = 'test-carousel-xl';
     const carouselName = (!props.name) ? genName : props.name;
     const contentGroup = props.contentBlockGroup;
@@ -24,7 +25,6 @@ export const Carousel = (props) => {
     const [iconClicked, setIconClicked] = useState(false);
     const [highlighted, setHighlighted] = useState('');
     const [selected, setSelected] = useState('');
-
     const handleHighlight = useCallback((data) => {
         try {
             if (data && iconClicked) {
@@ -49,36 +49,42 @@ export const Carousel = (props) => {
     
     useEffect(() => {
         try {
-            // console.log('clicked: ', iconClicked);
-            if (iconClicked) {
-                setIconClicked(false);
+            if (isMounted.current) {
+                if (iconClicked) {
+                    setIconClicked(false);
+                }
             }
+            // console.log('clicked: ', iconClicked);
         } catch (error) {
             GeneralError(error)
         }
-    }, [iconClicked]);
+    }, [iconClicked, isMounted]);
 
     useEffect(() => {
         try {
-            if (selected) {
-                setSelected('');
+            if (isMounted.current) {
+                if (selected) {
+                    setSelected('');
+                }
             }
         } catch (error) {
             GeneralError(error);
         }
-    }, [selected]);
+    }, [selected, isMounted]);
 
     return(
-        <div style={carouselStyle} className="carousel" id={carouselName}>
-            <IconList 
-                carouselCallback={handleClickedIcon} 
-                contentBlockGroup={contentGroup} 
-            />
-            <Highlighter 
-                carouselCallback={handleHighlight} 
-                selection={selected ? selected : ''} 
-                contentBlockGroup={contentGroup} 
-            />
-        </div>
+        <ErrorBoundary>
+            <div style={carouselStyle} className="carousel" id={carouselName}>
+                <IconList 
+                    carouselCallback={handleClickedIcon} 
+                    contentBlockGroup={contentGroup} 
+                />
+                <Highlighter 
+                    carouselCallback={handleHighlight} 
+                    selection={selected ? selected : ''} 
+                    contentBlockGroup={contentGroup} 
+                />
+            </div>
+        </ErrorBoundary>
     )
 }
