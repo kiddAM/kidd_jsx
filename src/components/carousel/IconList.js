@@ -1,6 +1,8 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Icon } from './Icon';
 import { GeneralError } from '../ErrorHandler';
+import { useIsMounted } from '../useIsMounted';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export const IconList = (props) => {
     const iconStripStyle = {
@@ -23,6 +25,7 @@ export const IconList = (props) => {
         verticalAlign: 'top',
     }
     
+    const isMounted = useIsMounted();
     const contentGroup = (props.contentBlockGroup ? props.contentBlockGroup : []);
     const [list, setList] = useState([]);
 
@@ -56,19 +59,24 @@ export const IconList = (props) => {
                 GeneralError(error);
             }
         }
+
         try {
-            if (contentGroup) {
-                setList(handleIconList(contentGroup));
+            if (isMounted.current) {
+                if (contentGroup) {
+                    setList(handleIconList(contentGroup));
+                }
             }
         } catch (error) {
             GeneralError(error);
         }
-    }, []);
+    }, [isMounted]);
 
     return(
-        <div style={iconStripStyle} className="icon-strip">
-            <ul style={iconStripListStyle} className="icon-strip-list">{list}</ul>
-        </div>
+        <ErrorBoundary>
+            <div style={iconStripStyle} className="icon-strip">
+                <ul style={iconStripListStyle} className="icon-strip-list">{list}</ul>
+            </div>
+        </ErrorBoundary>
     )
 }
 

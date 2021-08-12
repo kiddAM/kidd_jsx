@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Home } from './components/pages/Home';
 import { About } from './components/pages/About';
 import { Shop } from './components/pages/Shop';
+import { Miner } from './components/pages/Miner';
 
 import { GeneralError } from './components/ErrorHandler';
 
@@ -23,6 +24,9 @@ export const App = () => {
                         <li className="nav-item">
                             <Link to="/shop">shop</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/miner">data miner</Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -30,6 +34,7 @@ export const App = () => {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/about" component={About} />
                     <Route exact path="/shop" component={Shop} />
+                    <Route exact path="/miner" component={Miner} />
                 </Switch>
             </Router>
         );

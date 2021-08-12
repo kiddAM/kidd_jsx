@@ -5,7 +5,7 @@ export const About = () => {
     const blurbText = (
         <div>
             <p>Howdy! ...again.</p>
-            <p>I like a lot of things...</p>
+            <p>My name is Chloé A. Matthews, but all the homies call me Kidd...</p>
             <p>🤠</p>
         </div>
     )

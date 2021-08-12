@@ -1,6 +1,8 @@
-import React, { forwardRef, useState, useEffect, useCallback } from 'react';
+import React, { forwardRef, useState, useEffect, useCallback, useRef } from 'react';
 import { Highlight } from './Highlight';
 import { GeneralError } from '../ErrorHandler';
+import { useIsMounted } from '../useIsMounted';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export const Highlighter = (props) => {
     const highlightStyle = {
@@ -12,7 +14,8 @@ export const Highlighter = (props) => {
         margin: '0.025em auto',
     }
 
-    const contentGroup = props.contentBlockGroup;
+    const isMounted = useIsMounted();
+    const contentGroup = props.contentBlockGroup;   // console.log('🎲 ', contentGroup);
     const selection = props.selection;
     const [activeIndex, setActiveIndex] = useState(0);
     const [selectionMade, setSelectionMade] = useState(false);
@@ -41,55 +44,78 @@ export const Highlighter = (props) => {
         }
     }
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     try {
+    //         if (isMounted.current == true) {
+    //             return () => isMounted.current == false;
+    //         }
+    //         // return isMounted;
+    //     } catch (error) {
+    //         GeneralError(error)
+    //     }
+    // });
 
-    }, []);
-
-    useEffect(() => {
-        // console.log('in selection effect...');
-        if (selection) {
-            setSelectionMade(true);
-            let i = getSelectedIndex();
-            if (i !== activeIndex) {
-                setActiveIndex(i);
-            }
-        }
-    });
-
-    useEffect(() => {
-        setSelectionMade(false);
-    }, [selectionMade])
-
-    // console.log('should enter highlight effect...');
     useEffect(() => {
         try {
-            let isMounted = true;
-            if (isMounted) {
-                let count = null;
-                if (selectionMade) {
-                    count = activeIndex;
-                } else {
-                    count = 0;
-                }
-                // console.log('active rn: ', activeIndex);
-                const timer = setInterval(() => {
-                    if (count === Object.keys(contentGroup).length - 1) {
-                        count = 0;
-                    } else {
-                        count++;
+            if (isMounted.current) {
+                if (selection) {
+                    setSelectionMade(true);
+                    let i = getSelectedIndex();
+                    if (i !== activeIndex) {
+                        setActiveIndex(i);
                     }
-                    setActiveIndex(count);
-                }, 5500);
-                
-                return () => {
-                    clearInterval(timer);
-                    isMounted = false;
                 }
             }
         } catch (error) {
             GeneralError(error);
         }
-    }, []);
+        // console.log('in selection effect...');
+    });
+
+    useEffect(() => {
+        try {
+            if (isMounted.current) {
+                setSelectionMade(false);
+            }
+        } catch (error) {
+            GeneralError(error)
+        }
+    }, [selectionMade, isMounted])
+
+    // console.log('should enter highlight effect...');
+    useEffect(() => {
+        try {
+            if (isMounted.current) {
+                let count = null;
+                let start = 0;
+                if (selectionMade) {
+                    count = activeIndex;
+                } else {
+                    count = start;
+                }
+                // console.log('💻 idx to start: ', count);
+                // console.log('💻 len: ', Object.keys(contentGroup).length);
+                const timer = setInterval(() => {
+                    if (activeIndex < Object.keys(contentGroup).length - 1) {
+                        // console.log('💻 active idx before interval change: ', activeIndex ? activeIndex : 'none');
+                        // console.log('🧰 action: ++');
+                        count = activeIndex + 1;    
+                        // console.log('📀 new idx should be: ', count);
+                        setActiveIndex(count);
+                    } else {
+                        // console.log('💻 active idx before interval change: ', activeIndex ? activeIndex : 'none');
+                        // console.log('🧰 action: restart @ ', start);
+                        count = start;      
+                        // console.log('📀 new idx should be: ', count);
+                        setActiveIndex(count);
+                    }
+                }, 5000);
+                return () => clearInterval(timer);
+            }
+        } catch (error) {
+            GeneralError(error);
+        }
+    }, [activeIndex, isMounted]);
 
     const handleHighlightUpdate = (k) => {
         // checks index, returns highlight div element
@@ -115,9 +141,11 @@ export const Highlighter = (props) => {
     }
 
     return(
-        <div style={highlightStyle} className="highlight-area">
-            {handleHighlightUpdate(activeIndex ? activeIndex : 0)}
-            <p>{activeIndex}</p>
-        </div>
+        <ErrorBoundary>
+            <div style={highlightStyle} className="highlight-area">
+                {handleHighlightUpdate(activeIndex ? activeIndex : 0)}
+                <p>{activeIndex}</p>
+            </div>
+        </ErrorBoundary>
     )
 }
